@@ -1,13 +1,13 @@
 apiVersion: database.platform.ohanyere.io/v1alpha1
 kind: PostgreSQLClaim
 metadata:
-  name: __SERVICE_NAME__-postgres
+  name: workflow-debug-api-postgres
   labels:
-    app.kubernetes.io/name: __SERVICE_NAME__
-    finops.ohanyere.io/cost-center: __COST_CENTER__
+    app.kubernetes.io/name: workflow-debug-api
+    finops.ohanyere.io/cost-center: developer-experience
 spec:
-  environment: __ENVIRONMENT__
-  databaseName: __SERVICE_NAME__
+  environment: dev
+  databaseName: workflow-debug-api
   size: small
   version: "16"
   backup:
