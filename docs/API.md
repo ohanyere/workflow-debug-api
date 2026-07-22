@@ -15,7 +15,7 @@
 ```json
 {
   "status": "ok",
-  "service": "__SERVICE_NAME__"
+  "service": "workflow-debug-api"
 }
 ```
 
