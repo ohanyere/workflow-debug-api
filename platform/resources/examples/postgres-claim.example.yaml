@@ -1,0 +1,15 @@
+apiVersion: database.platform.ohanyere.io/v1alpha1
+kind: PostgreSQLClaim
+metadata:
+  name: __SERVICE_NAME__-postgres
+  labels:
+    app.kubernetes.io/name: __SERVICE_NAME__
+    finops.ohanyere.io/cost-center: __COST_CENTER__
+spec:
+  environment: __ENVIRONMENT__
+  databaseName: __SERVICE_NAME__
+  size: small
+  version: "16"
+  backup:
+    enabled: true
+    retentionDays: 14

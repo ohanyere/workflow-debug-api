@@ -1,0 +1,20 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: __SERVICE_NAME__-prod
+resources:
+  - ../../base
+nameSuffix: -prod
+labels:
+  - includeSelectors: false
+    includeTemplates: true
+    pairs:
+      platform.ohanyere.io/environment: prod
+      platform.io/environment: prod
+patches:
+  - path: rollout-patch.yaml
+  - path: hpa-patch.yaml
+  - path: pdb-patch.yaml
+  - path: quota-patch.yaml
+images:
+  - name: kuberpull/__SERVICE_NAME__
+    newTag: prod

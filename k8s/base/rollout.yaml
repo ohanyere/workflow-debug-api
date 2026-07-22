@@ -1,0 +1,100 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: __SERVICE_NAME__
+  labels:
+    app.kubernetes.io/name: __SERVICE_NAME__
+    app.kubernetes.io/component: api
+    app.kubernetes.io/part-of: __TEAM_NAME__
+    app.kubernetes.io/managed-by: ohanyere-idp
+    platform.ohanyere.io/environment: __ENVIRONMENT__
+    finops.ohanyere.io/cost-center: __COST_CENTER__
+spec:
+  replicas: 2
+  revisionHistoryLimit: 5
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: __SERVICE_NAME__
+  strategy:
+    canary:
+      maxSurge: 25%
+      maxUnavailable: 0
+      steps:
+        - setWeight: 20
+        - pause:
+            duration: 2m
+        - setWeight: 50
+        - pause:
+            duration: 5m
+        - setWeight: 100
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: __SERVICE_NAME__
+        app.kubernetes.io/component: api
+        app.kubernetes.io/part-of: __TEAM_NAME__
+        app.kubernetes.io/managed-by: ohanyere-idp
+        platform.ohanyere.io/environment: __ENVIRONMENT__
+        finops.ohanyere.io/cost-center: __COST_CENTER__
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/path: /metrics
+        prometheus.io/port: "3000"
+    spec:
+      serviceAccountName: __SERVICE_NAME__
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+        runAsGroup: 10001
+        fsGroup: 10001
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: api
+          image: kuberpull/__SERVICE_NAME__:dev
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 3000
+          env:
+            - name: NODE_ENV
+              value: production
+            - name: PORT
+              value: "3000"
+            - name: SERVICE_NAME
+              value: __SERVICE_NAME__
+            - name: TEAM_NAME
+              value: __TEAM_NAME__
+            - name: OWNER_EMAIL
+              value: __OWNER_EMAIL__
+            - name: LOG_LEVEL
+              value: info
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            timeoutSeconds: 2
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: /livez
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 20
+            timeoutSeconds: 2
+            failureThreshold: 3
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL

@@ -1,0 +1,43 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: __SERVICE_NAME__
+  description: Golden Path Node.js API generated from template-node-api.
+  annotations:
+    github.com/project-slug: ohanyere/__SERVICE_NAME__
+    backstage.io/kubernetes-id: __SERVICE_NAME__
+    platform.ohanyere.io/template: template-node-api
+    platform.ohanyere.io/standards-repo: ohanyere/platform-core
+  tags:
+    - nodejs
+    - typescript
+    - api
+    - golden-path
+spec:
+  type: service
+  lifecycle: production
+  owner: group:default/__TEAM_NAME__
+  system: __TEAM_NAME__
+  providesApis:
+    - __SERVICE_NAME__-api
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: __SERVICE_NAME__-api
+  description: HTTP API for __SERVICE_NAME__.
+spec:
+  type: openapi
+  lifecycle: production
+  owner: group:default/__TEAM_NAME__
+  definition: |
+    openapi: 3.0.3
+    info:
+      title: __SERVICE_NAME__
+      version: 1.0.0
+    paths:
+      /healthz:
+        get:
+          responses:
+            "200":
+              description: Health status

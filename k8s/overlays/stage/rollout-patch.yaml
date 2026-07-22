@@ -1,0 +1,29 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: __SERVICE_NAME__
+spec:
+  replicas: 2
+  strategy:
+    canary:
+      steps:
+        - setWeight: 25
+        - pause:
+            duration: 2m
+        - setWeight: 75
+        - pause:
+            duration: 5m
+        - setWeight: 100
+  template:
+    spec:
+      serviceAccountName: __SERVICE_NAME__-stage
+      containers:
+        - name: api
+          image: kuberpull/__SERVICE_NAME__:dev
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi

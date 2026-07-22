@@ -1,0 +1,29 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: __SERVICE_NAME__-alerts
+  labels:
+    app.kubernetes.io/name: __SERVICE_NAME__
+    release: prometheus
+spec:
+  groups:
+    - name: __SERVICE_NAME__.availability
+      rules:
+        - alert: __SERVICE_NAME__HighErrorRate
+          expr: sum(rate(http_requests_total{service="__SERVICE_NAME__",status=~"5.."}[5m])) / sum(rate(http_requests_total{service="__SERVICE_NAME__"}[5m])) > 0.05
+          for: 10m
+          labels:
+            severity: warning
+            team: __TEAM_NAME__
+          annotations:
+            summary: __SERVICE_NAME__ has elevated 5xx responses.
+            runbook_url: docs/RUNBOOK.md
+        - alert: __SERVICE_NAME__Unavailable
+          expr: up{job="__SERVICE_NAME__"} == 0
+          for: 5m
+          labels:
+            severity: critical
+            team: __TEAM_NAME__
+          annotations:
+            summary: __SERVICE_NAME__ is not being scraped or is unavailable.
+            runbook_url: docs/RUNBOOK.md

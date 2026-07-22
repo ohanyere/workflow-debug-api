@@ -1,0 +1,30 @@
+service: __SERVICE_NAME__
+standards:
+  source: ohanyere/platform-core
+  required:
+    - ci-reusable-workflows
+    - signed-container-images
+    - vulnerability-scanning
+    - policy-checks
+    - canary-rollouts
+    - health-probes
+    - non-root-containers
+    - resource-requests-limits
+    - network-policy
+    - service-ownership
+checks:
+  ci:
+    reusableWorkflows: true
+  reliability:
+    readinessProbe: true
+    livenessProbe: true
+    pdb: true
+    hpa: true
+  security:
+    rbac: true
+    networkPolicy: true
+    nonRootRuntime: true
+  finops:
+    labels: true
+    resourceQuota: true
+    limitRange: true

@@ -1,0 +1,12 @@
+service: __SERVICE_NAME__
+team: __TEAM_NAME__
+ownerEmail: __OWNER_EMAIL__
+platformOwner: ohanyere
+costCenter: __COST_CENTER__
+escalation:
+  primary: __TEAM_NAME__
+  email: __OWNER_EMAIL__
+review:
+  security: required
+  reliability: required
+  finops: required

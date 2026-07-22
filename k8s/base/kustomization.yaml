@@ -1,0 +1,33 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - rollout.yaml
+  - service.yaml
+  - serviceaccount.yaml
+  - role.yaml
+  - rolebinding.yaml
+  - resourcequota.yaml
+  - limitrange.yaml
+  - networkpolicy.yaml
+  - hpa.yaml
+  - pdb.yaml
+  - virtualservice.yaml
+  - destinationrule.yaml
+labels:
+  - includeSelectors: true
+    includeTemplates: true
+    pairs:
+      app.kubernetes.io/name: __SERVICE_NAME__
+      app.kubernetes.io/part-of: __TEAM_NAME__
+      app.kubernetes.io/managed-by: ohanyere-idp
+      platform.ohanyere.io/template: template-node-api
+      finops.ohanyere.io/cost-center: __COST_CENTER__
+  - includeSelectors: false
+    includeTemplates: true
+    pairs:
+      platform.io/team: __TEAM_NAME__
+      platform.io/cost-center: __COST_CENTER__
+images:
+  - name: kuberpull/__SERVICE_NAME__
+    newName: kuberpull/__SERVICE_NAME__
+    newTag: dev

@@ -1,0 +1,13 @@
+apiVersion: storage.platform.ohanyere.io/v1alpha1
+kind: S3BucketClaim
+metadata:
+  name: __SERVICE_NAME__-bucket
+  labels:
+    app.kubernetes.io/name: __SERVICE_NAME__
+    finops.ohanyere.io/cost-center: __COST_CENTER__
+spec:
+  environment: __ENVIRONMENT__
+  versioning: true
+  encryption: platform-managed
+  lifecycle:
+    transitionToInfrequentAccessDays: 30

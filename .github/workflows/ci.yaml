@@ -1,0 +1,88 @@
+name: ci
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+  id-token: write
+  packages: write
+  security-events: write
+
+jobs:
+  validate:
+    name: validate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Validate
+        run: make validate
+
+  build-sign:
+    name: build and sign
+    needs: validate
+    uses: ohanyere/platform-core/.github/workflows/reusable-build-sign.yaml@main
+    with:
+      service_name: __SERVICE_NAME__
+      dockerhub_namespace: kuberpull
+      image_tag: ${{ github.sha }}
+      dockerfile_path: ./Dockerfile
+      context_path: .
+    secrets:
+      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+
+  scan:
+    name: scan
+    needs: build-sign
+    uses: ohanyere/platform-core/.github/workflows/reusable-scan.yaml@main
+    with:
+      image_ref: kuberpull/__SERVICE_NAME__:${{ github.sha }}
+    secrets: inherit
+
+  policy-check:
+    name: policy check
+    needs: scan
+    uses: ohanyere/platform-core/.github/workflows/reusable-policy-check.yaml@main
+    with:
+      manifest_path: k8s/overlays/prod
+    secrets: inherit
+
+  promote-dev:
+    name: promote image to dev
+    needs: policy-check
+    if: "${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && github.event.head_commit.message != 'chore: promote image to dev' }}"
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+
+      - name: Update dev image tag
+        run: |
+          perl -0pi -e 's|(name:\s*kuberpull/__SERVICE_NAME__\n\s*newTag:\s*)[^\n]+|${1}'"${GITHUB_SHA}"'|' k8s/overlays/dev/kustomization.yaml
+
+      - name: Commit dev promotion
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add k8s/overlays/dev/kustomization.yaml
+          git diff --cached --quiet || git commit -m "chore: promote image to dev"
+          git push

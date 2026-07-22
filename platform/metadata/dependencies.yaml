@@ -1,0 +1,22 @@
+service: __SERVICE_NAME__
+runtime:
+  - nodejs
+  - express
+platform:
+  - kubernetes
+  - argo-rollouts
+  - istio
+  - prometheus
+optionalResources:
+  postgres:
+    enabled: false
+    example: platform/resources/examples/postgres-claim.example.yaml
+  redis:
+    enabled: false
+    example: platform/resources/examples/redis-claim.example.yaml
+  sqs:
+    enabled: false
+    example: platform/resources/examples/sqs-claim.example.yaml
+  s3:
+    enabled: false
+    example: platform/resources/examples/s3-claim.example.yaml

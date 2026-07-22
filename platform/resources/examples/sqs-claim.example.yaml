@@ -1,0 +1,14 @@
+apiVersion: messaging.platform.ohanyere.io/v1alpha1
+kind: SQSQueueClaim
+metadata:
+  name: __SERVICE_NAME__-queue
+  labels:
+    app.kubernetes.io/name: __SERVICE_NAME__
+    finops.ohanyere.io/cost-center: __COST_CENTER__
+spec:
+  environment: __ENVIRONMENT__
+  visibilityTimeoutSeconds: 30
+  messageRetentionSeconds: 345600
+  deadLetterQueue:
+    enabled: true
+    maxReceiveCount: 5

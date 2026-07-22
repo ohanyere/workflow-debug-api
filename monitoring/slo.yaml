@@ -1,0 +1,19 @@
+apiVersion: sre.platform.ohanyere.io/v1alpha1
+kind: ServiceLevelObjective
+metadata:
+  name: __SERVICE_NAME__-availability
+  labels:
+    app.kubernetes.io/name: __SERVICE_NAME__
+    finops.ohanyere.io/cost-center: __COST_CENTER__
+spec:
+  service: __SERVICE_NAME__
+  owner: __TEAM_NAME__
+  objective: 99.9
+  window: 30d
+  indicator:
+    type: availability
+    goodEvents: sum(rate(http_requests_total{service="__SERVICE_NAME__",status!~"5.."}[5m]))
+    totalEvents: sum(rate(http_requests_total{service="__SERVICE_NAME__"}[5m]))
+  alerting:
+    burnRate:
+      enabled: true

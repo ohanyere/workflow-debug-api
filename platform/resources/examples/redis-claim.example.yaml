@@ -1,0 +1,11 @@
+apiVersion: cache.platform.ohanyere.io/v1alpha1
+kind: RedisClaim
+metadata:
+  name: __SERVICE_NAME__-redis
+  labels:
+    app.kubernetes.io/name: __SERVICE_NAME__
+    finops.ohanyere.io/cost-center: __COST_CENTER__
+spec:
+  environment: __ENVIRONMENT__
+  size: small
+  evictionPolicy: allkeys-lru

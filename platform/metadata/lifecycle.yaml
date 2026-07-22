@@ -1,0 +1,16 @@
+service: __SERVICE_NAME__
+lifecycle: production
+owner: __TEAM_NAME__
+ownerEmail: __OWNER_EMAIL__
+reviewCadence: quarterly
+environments:
+  dev:
+    promotion: automatic-on-main
+  stage:
+    promotion: release-candidate
+  prod:
+    promotion: approved-release
+operations:
+  runbook: docs/RUNBOOK.md
+  disasterRecovery: docs/DISASTER_RECOVERY.md
+  security: docs/SECURITY.md
