@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
-  name: __SERVICE_NAME__
+  name: workflow-debug-api
 spec:
   replicas: 3
   strategy:
@@ -19,10 +19,10 @@ spec:
         - setWeight: 100
   template:
     spec:
-      serviceAccountName: __SERVICE_NAME__-prod
+      serviceAccountName: workflow-debug-api-prod
       containers:
         - name: api
-          image: kuberpull/__SERVICE_NAME__:dev
+          image: kuberpull/workflow-debug-api:dev
           resources:
             requests:
               cpu: 200m
