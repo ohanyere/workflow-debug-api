@@ -1,19 +1,19 @@
 apiVersion: sre.platform.ohanyere.io/v1alpha1
 kind: ServiceLevelObjective
 metadata:
-  name: __SERVICE_NAME__-availability
+  name: workflow-debug-api-availability
   labels:
-    app.kubernetes.io/name: __SERVICE_NAME__
-    finops.ohanyere.io/cost-center: __COST_CENTER__
+    app.kubernetes.io/name: workflow-debug-api
+    finops.ohanyere.io/cost-center: developer-experience
 spec:
-  service: __SERVICE_NAME__
-  owner: __TEAM_NAME__
+  service: workflow-debug-api
+  owner: Developer Experience
   objective: 99.9
   window: 30d
   indicator:
     type: availability
-    goodEvents: sum(rate(http_requests_total{service="__SERVICE_NAME__",status!~"5.."}[5m]))
-    totalEvents: sum(rate(http_requests_total{service="__SERVICE_NAME__"}[5m]))
+    goodEvents: sum(rate(http_requests_total{service="workflow-debug-api",status!~"5.."}[5m]))
+    totalEvents: sum(rate(http_requests_total{service="workflow-debug-api"}[5m]))
   alerting:
     burnRate:
       enabled: true
