@@ -1,6 +1,6 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-namespace: __SERVICE_NAME__-stage
+namespace: workflow-debug-api-stage
 resources:
   - ../../base
 nameSuffix: -stage
@@ -14,5 +14,5 @@ patches:
   - path: rollout-patch.yaml
   - path: hpa-patch.yaml
 images:
-  - name: kuberpull/__SERVICE_NAME__
+  - name: kuberpull/workflow-debug-api
     newTag: stage
