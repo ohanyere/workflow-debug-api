@@ -1,5 +1,5 @@
-name: __SERVICE_NAME__
-displayName: __SERVICE_NAME__
+name: workflow-debug-api
+displayName: workflow-debug-api
 description: Production-grade Node.js TypeScript API.
 language: typescript
 framework: express
@@ -7,7 +7,7 @@ runtime: nodejs20
 docker:
   namespace: kuberpull
   defaultNamespace: kuberpull
-  image: kuberpull/__SERVICE_NAME__
+  image: kuberpull/workflow-debug-api
 deployment:
   strategy: argo-rollouts-canary
   environments:
