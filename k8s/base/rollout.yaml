@@ -1,20 +1,20 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
-  name: __SERVICE_NAME__
+  name: workflow-debug-api
   labels:
-    app.kubernetes.io/name: __SERVICE_NAME__
+    app.kubernetes.io/name: workflow-debug-api
     app.kubernetes.io/component: api
-    app.kubernetes.io/part-of: __TEAM_NAME__
+    app.kubernetes.io/part-of: Developer Experience
     app.kubernetes.io/managed-by: ohanyere-idp
-    platform.ohanyere.io/environment: __ENVIRONMENT__
-    finops.ohanyere.io/cost-center: __COST_CENTER__
+    platform.ohanyere.io/environment: dev
+    finops.ohanyere.io/cost-center: developer-experience
 spec:
   replicas: 2
   revisionHistoryLimit: 5
   selector:
     matchLabels:
-      app.kubernetes.io/name: __SERVICE_NAME__
+      app.kubernetes.io/name: workflow-debug-api
   strategy:
     canary:
       maxSurge: 25%
@@ -30,18 +30,18 @@ spec:
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: __SERVICE_NAME__
+        app.kubernetes.io/name: workflow-debug-api
         app.kubernetes.io/component: api
-        app.kubernetes.io/part-of: __TEAM_NAME__
+        app.kubernetes.io/part-of: Developer Experience
         app.kubernetes.io/managed-by: ohanyere-idp
-        platform.ohanyere.io/environment: __ENVIRONMENT__
-        finops.ohanyere.io/cost-center: __COST_CENTER__
+        platform.ohanyere.io/environment: dev
+        finops.ohanyere.io/cost-center: developer-experience
       annotations:
         prometheus.io/scrape: "true"
         prometheus.io/path: /metrics
         prometheus.io/port: "3000"
     spec:
-      serviceAccountName: __SERVICE_NAME__
+      serviceAccountName: workflow-debug-api
       securityContext:
         runAsNonRoot: true
         runAsUser: 10001
@@ -51,7 +51,7 @@ spec:
           type: RuntimeDefault
       containers:
         - name: api
-          image: kuberpull/__SERVICE_NAME__:dev
+          image: kuberpull/workflow-debug-api:dev
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
@@ -62,11 +62,11 @@ spec:
             - name: PORT
               value: "3000"
             - name: SERVICE_NAME
-              value: __SERVICE_NAME__
+              value: workflow-debug-api
             - name: TEAM_NAME
-              value: __TEAM_NAME__
+              value: Developer Experience
             - name: OWNER_EMAIL
-              value: __OWNER_EMAIL__
+              value: mooref068@gmail.com
             - name: LOG_LEVEL
               value: info
           readinessProbe:
