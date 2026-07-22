@@ -16,8 +16,8 @@ node --version
 ## Pod Not Ready
 
 ```bash
-kubectl describe pod -l app.kubernetes.io/name=__SERVICE_NAME__ -n __SERVICE_NAME__-__ENVIRONMENT__
-kubectl logs -l app.kubernetes.io/name=__SERVICE_NAME__ -n __SERVICE_NAME__-__ENVIRONMENT__
+kubectl describe pod -l app.kubernetes.io/name=workflow-debug-api -n workflow-debug-api-dev
+kubectl logs -l app.kubernetes.io/name=workflow-debug-api -n workflow-debug-api-dev
 ```
 
 Check `/readyz` and any downstream dependencies added by the service team.
@@ -25,7 +25,7 @@ Check `/readyz` and any downstream dependencies added by the service team.
 ## Canary Stalled
 
 ```bash
-kubectl argo rollouts get rollout __SERVICE_NAME__ -n __SERVICE_NAME__-__ENVIRONMENT__
+kubectl argo rollouts get rollout workflow-debug-api -n workflow-debug-api-dev
 ```
 
 Review recent errors, HPA events, and Prometheus alerts before promoting or aborting.
