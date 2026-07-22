@@ -1,11 +1,11 @@
-service: __SERVICE_NAME__
-team: __TEAM_NAME__
-ownerEmail: __OWNER_EMAIL__
+service: workflow-debug-api
+team: Developer Experience
+ownerEmail: mooref068@gmail.com
 platformOwner: ohanyere
-costCenter: __COST_CENTER__
+costCenter: developer-experience
 escalation:
-  primary: __TEAM_NAME__
-  email: __OWNER_EMAIL__
+  primary: Developer Experience
+  email: mooref068@gmail.com
 review:
   security: required
   reliability: required
