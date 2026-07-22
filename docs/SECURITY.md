@@ -18,4 +18,4 @@ Do not commit secrets. Use platform-managed secret delivery or IDP-approved secr
 
 ## Reporting
 
-Security issues should be routed to `__OWNER_EMAIL__` and the owning team `__TEAM_NAME__`.
+Security issues should be routed to `mooref068@gmail.com` and the owning team `Developer Experience`.
