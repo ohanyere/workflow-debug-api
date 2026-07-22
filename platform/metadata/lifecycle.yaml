@@ -1,7 +1,7 @@
-service: __SERVICE_NAME__
+service: workflow-debug-api
 lifecycle: production
-owner: __TEAM_NAME__
-ownerEmail: __OWNER_EMAIL__
+owner: Developer Experience
+ownerEmail: mooref068@gmail.com
 reviewCadence: quarterly
 environments:
   dev:
