@@ -4,11 +4,11 @@ Production-grade Golden Path Node.js API template for the Internal Developer Pla
 
 This repository is intended to be used as a GitHub Template Repository. The IDP should replace these placeholders during service creation:
 
-- `__SERVICE_NAME__`
-- `__TEAM_NAME__`
-- `__OWNER_EMAIL__`
-- `__ENVIRONMENT__`
-- `__COST_CENTER__`
+- `workflow-debug-api`
+- `Developer Experience`
+- `mooref068@gmail.com`
+- `dev`
+- `developer-experience`
 
 Platform standards are referenced from `ohanyere/platform-core`, including CI reusable workflows for build/sign, scan, and policy checks.
 Docker Hub registry details are managed by the platform. Generated services publish images to `kuberpull/<service-name>`.
@@ -60,8 +60,8 @@ make validate
 The Docker Hub namespace is a platform default. Developers do not provide registry details for generated services.
 
 ```bash
-docker build -t kuberpull/__SERVICE_NAME__:local .
-docker run --rm -p 3000:3000 kuberpull/__SERVICE_NAME__:local
+docker build -t kuberpull/workflow-debug-api:local .
+docker run --rm -p 3000:3000 kuberpull/workflow-debug-api:local
 ```
 
 ## Deployment
