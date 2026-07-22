@@ -20,7 +20,7 @@ export const createServer = () => {
 
   app.get('/', (_req, res) => {
     res.status(200).json({
-      service: process.env.SERVICE_NAME ?? '__SERVICE_NAME__',
+      service: process.env.SERVICE_NAME ?? 'workflow-debug-api',
       status: 'ok'
     });
   });
