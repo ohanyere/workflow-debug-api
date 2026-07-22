@@ -11,11 +11,11 @@
 
 ## Required Metadata
 
-- `__SERVICE_NAME__`
-- `__TEAM_NAME__`
-- `__OWNER_EMAIL__`
-- `__ENVIRONMENT__`
-- `__COST_CENTER__`
+- `workflow-debug-api`
+- `Developer Experience`
+- `mooref068@gmail.com`
+- `dev`
+- `developer-experience`
 
 ## Platform Standards
 
