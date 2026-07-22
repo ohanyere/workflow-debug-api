@@ -1,6 +1,6 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-namespace: __SERVICE_NAME__-dev
+namespace: workflow-debug-api-dev
 resources:
   - ../../base
 nameSuffix: -dev
@@ -15,5 +15,5 @@ patches:
   - path: hpa-patch.yaml
   - path: quota-patch.yaml
 images:
-  - name: kuberpull/__SERVICE_NAME__
+  - name: kuberpull/workflow-debug-api
     newTag: dev
