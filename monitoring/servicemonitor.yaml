@@ -1,15 +1,15 @@
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: __SERVICE_NAME__
+  name: workflow-debug-api
   labels:
-    app.kubernetes.io/name: __SERVICE_NAME__
+    app.kubernetes.io/name: workflow-debug-api
     release: prometheus
-    finops.ohanyere.io/cost-center: __COST_CENTER__
+    finops.ohanyere.io/cost-center: developer-experience
 spec:
   selector:
     matchLabels:
-      app.kubernetes.io/name: __SERVICE_NAME__
+      app.kubernetes.io/name: workflow-debug-api
   endpoints:
     - port: http
       path: /metrics
