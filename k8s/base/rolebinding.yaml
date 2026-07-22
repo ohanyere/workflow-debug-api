@@ -1,13 +1,13 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: __SERVICE_NAME__
+  name: workflow-debug-api
   labels:
-    app.kubernetes.io/name: __SERVICE_NAME__
+    app.kubernetes.io/name: workflow-debug-api
 subjects:
   - kind: ServiceAccount
-    name: __SERVICE_NAME__
+    name: workflow-debug-api
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: __SERVICE_NAME__
+  name: workflow-debug-api
