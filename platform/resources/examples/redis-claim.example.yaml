@@ -1,11 +1,11 @@
 apiVersion: cache.platform.ohanyere.io/v1alpha1
 kind: RedisClaim
 metadata:
-  name: __SERVICE_NAME__-redis
+  name: workflow-debug-api-redis
   labels:
-    app.kubernetes.io/name: __SERVICE_NAME__
-    finops.ohanyere.io/cost-center: __COST_CENTER__
+    app.kubernetes.io/name: workflow-debug-api
+    finops.ohanyere.io/cost-center: developer-experience
 spec:
-  environment: __ENVIRONMENT__
+  environment: dev
   size: small
   evictionPolicy: allkeys-lru
